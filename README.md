@@ -5,6 +5,8 @@ with help of
 Tikran mkrechyan and Baruyr Khachatryan
 30-06-2021
 
-Reach us by
+
+- 👋 Hi, I’m @digisoftgit
+- 📫 Reach us by ...
 info@digisoft-it.com
 +37498229898
