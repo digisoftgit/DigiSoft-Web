@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+  margin:0;
+}
+
+body {
+  font-family: "Comic Sans MS", "Marker Felt", ui-sans-serif, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  margin: 0;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body > * {
+  padding: 0.5rem;
+}
+
+header, footer {
+  text-align: center;
+}
+
+main {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+main > div {
+  text-align: center;
+}
+
+h1 {
+  font-size: 5rem;
+  background: -webkit-linear-gradient(rgb(180, 14, 185), #333);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  font-size: 4rem;
+  background: -webkit-linear-gradient(rgb(180, 14, 185), #333);
+  font-weight: bolder;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.logo {
+  height: 22em;
+
+}
+@media screen and (max-width: 768px) {
+p {
+  font-size: 2.5rem;
+}
+h1 {
+  font-size: 2.5rem;
+}
+
+}
