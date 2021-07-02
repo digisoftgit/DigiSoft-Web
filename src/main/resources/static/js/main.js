@@ -161,11 +161,11 @@
   });
 
   // Skills section
-  // $('#skills').waypoint(function() {
-  //   $('.progress .progress-bar').each(function() {
-  //     $(this).css("width", $(this).attr("aria-valuenow") + '%');
-  //   });
-  // }, { offset: '80%'} );
+  $('#skills').waypoint(function() {
+    $('.progress .progress-bar').each(function() {
+      $(this).css("width", $(this).attr("aria-valuenow") + '%');
+    });
+  }, { offset: '80%'} );
 
   // jQuery counterUp (used in Facts section)
   $('[data-toggle="counter-up"]').counterUp({

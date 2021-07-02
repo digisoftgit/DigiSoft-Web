@@ -1,26 +1,388 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title> Digisoft solutions</title>
-    <meta name="description" content="Digisoft website">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./css/comingSoon.css">
-    <link href="img/favicon.ico" rel="icon">
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+  <title>DigiSoft </title>
+  
+  <!-- Favicons -->
+  <link href="https://www.digisoft-it.com/img/18131624880056705.png" rel="icon">
 
-    <script src="./js/comingSoon.js"  defer></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+  <script src="https://unpkg.com/i18next/i18next.js"></script>
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="js/breakpoints.js"></script>
 </head>
 <body>
-<header>
-    <h1>COMING SOON</h1>
-</header>
-<main>
-    <img src="./img/digiSoft_bg.png" class="logo" />
-</main>
-<footer>
-    <p id="demo" ></p>
-</footer>
+
+  <!--==========================
+    Header
+  ============================-->
+  <header id="header">
+    <div class="container-fluid">
+
+      <div id="logo" class="pull-left">
+        <h1><a href="#intro" class="scrollto">DigiSoft</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+      </div>
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="#intro" class='menu_first_element'>Home</a></li>
+          <li><a class="menu_second_element" href="#about">About Us</a></li>
+          <li><a class="menu_third_element" href="#portfolio">Portfolio</a></li>
+          <li><a  class="menu_fourth_element" href="#contact">Contact</a></li>
+          <li class="menu-has-children"><i class="ion-earth mobile"></i><a href="javascript:void(0);" class="languages-menu menu_fifth_element">lang </a>
+            <ul>
+              <!-- <li><a href="#" onclick="i18next.changeLanguage('hy')">Հայերեն</a></li> -->
+              <li><a href="javascript:void(0);" onclick="i18next.changeLanguage('en')">English</a></li>
+<!--              <li><a href="javascript:void(0);" onclick="i18next.changeLanguage('ru')">Русский</a></li>-->
+              <!-- <li><a href="#" onclick="i18next.changeLanguage('ar')">اللغة العربية</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Intro Section
+  ============================-->
+ 
+  <section id="intro">
+    <div class="intro-container">
+      <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+        <div class="carousel-inner" role="listbox">
+          <div class="carousel-item active">
+            <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
+            <div class="carousel-container">
+              <div class="carousel-content">
+                <h2 class="intro_header"></h2>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- #intro -->
+
+  <main id="main">
+    <!--==========================
+      About Us Section
+    ============================-->
+    <section id="about">
+      <div class="container">
+
+        <header class="section-header">
+          <h3 class="about-header-title"></h3>
+          <p class="about_us_content">
+           </p>
+        </header>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <header class="section-header wow fadeInUp">
+          <h3 class="section_header_title"></h3>
+          <p class="section_header_content">
+           
+            </p>
+        </header>
+
+        <div class="row  justify-content-center">
+
+          <div class="col-lg-5 col-md-5 box wow bounceInUp" data-wow-duration="1.4s">
+            <div class="icon"><i class="ion-ios-monitor-outline"></i></div>
+            <h4 class="title"><a class="webTitle" href="javascript:void(0);"></a></h4>
+            <p class="description webContent"></p>
+          </div>
+          <div class="col-lg-5 col-md-5 box wow bounceInUp" data-wow-duration="1.4s">
+            <div class="icon"><i class="ion-ios-compose-outline"></i></div>
+            <h4 class="title "><a class="mobileAppTitle" href="javascript:void(0);"></a></h4>
+            <p class="description mobileAppContent"></p>
+          </div>
+          <div class="col-lg-5 col-md-5 box wow bounceInUp" data-wow-duration="1.4s">
+            <div class="icon"><i class="ion-ios-paper-outline"></i></div>
+            <h4 class="title"><a class="uiTitle" href="javascript:void(0);"></a></h4>
+            <p class="description uiContent"></p>
+          </div>
+          <div class="col-lg-5 col-md-5 box wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
+            <div class="icon"><i class="ion-ios-calculator-outline"></i></div>
+            <h4 class="title"><a class="machineLTitle" href="javascript:void(0);"></a></h4>
+            <p class="description machineLContent"></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!--==========================
+      Portfolio Section
+    ============================-->
+    <section id="portfolio"  class="section-bg" >
+      <div class="container">
+
+        <header class="section-header">
+          <h3 class="portfolio-section-title"></h3>
+        </header>
+
+        <div class="row portfolio-container">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">
+            <div class="portfolio-wrap">
+              <figure>
+                <img src="img/mimo/mimo2-min.png" class="img-fluid" alt="">
+                <a href="img/mimo/mimo2-min.png" data-lightbox="mimo" data-title="Mimo Bike" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                <a href="img/mimo/mimo1-min.png" data-lightbox="mimo">Image #2</a>
+                <a href="img/mimo/mimo3-min.png" data-lightbox="mimo">Image #3</a>
+                <a href="img/mimo/mimo4-min.png" data-lightbox="mimo">Image #4</a>
+              </figure>
+
+              <div class="portfolio-info">
+                <h4 class="mimo_title"></h4>
+                <p class="mimo_content"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">
+            <div class="portfolio-wrap">
+              <figure>
+                <img src="img/oferta/oferta1.jpg" class="img-fluid" alt="">
+                <a href="img/oferta/oferta1.jpg" data-lightbox="oferta" data-title="Oferta" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                <a href="img/oferta/oferta2.jpg" data-lightbox="oferta">Image #2</a>
+                <a href="img/oferta/oferta3.jpg" data-lightbox="oferta">Image #3</a>
+                <a href="img/oferta/oferta4.jpg" data-lightbox="oferta">Image #4</a>
+              </figure>
+
+              <div class="portfolio-info">
+                <h4 class="oferta_title"></h4>
+                <p class="oferta_content"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
+            <div class="portfolio-wrap">
+              <figure>
+                <img src="img/bkdRental/bkd1-min.png" class="img-fluid" alt="">
+                <a href="img/bkdRental/bkd1-min.png" class="link-preview" data-lightbox="bkdRental" data-title="App 2" title="Preview"><i class="ion ion-eye"></i></a>
+                <a href="img/bkdRental/bkd2-min.png" data-lightbox="bkdRental">Image #2</a>
+                <a href="img/bkdRental/bkd3-min.png" data-lightbox="bkdRental">Image #3</a>
+                <a href="img/bkdRental/bkd4-min.png" data-lightbox="bkdRental">Image #4</a>
+              </figure>
+
+              <div class="portfolio-info">
+                <h4 class="bkd_title" >
+                </h4>
+                <p class="bkd_content">
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
+            <div class="portfolio-wrap">
+              <figure>
+                <img src="img/yooto/yooto1-min.png" class="img-fluid" alt="">
+                <a href="img/yooto/yooto1-min.png" class="link-preview" data-lightbox="yooto" data-title="App 2" title="Preview"><i class="ion ion-eye"></i></a>
+                <a href="img/yooto/yooto2-min.png" data-lightbox="yooto">Image #2</a>
+                <a href="img/yooto/yotoo3-min.png" data-lightbox="yooto">Image #3</a>
+                <a href="img/yooto/yotoo3-min.png" data-lightbox="yooto">Image #4</a>
+
+              </figure>
+
+              <div class="portfolio-info">
+                <h4 class="yooto_title">
+                </h4>
+                <p class="yooto_content">
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">
+            <div class="portfolio-wrap">
+                <figure>
+                  <img src="img/dgsTruck/dgsTruck1-min.png" class="img-fluid" alt="">
+                  <a href="img/dgsTruck/dgsTruck1-min.png" class="link-preview" data-lightbox="dgsTruck" data-title="App 2" title="Preview"><i class="ion ion-eye"></i></a>
+                  <a href="img/dgsTruck/dgsTruck2-min.png" data-lightbox="dgsTruck">Image #2</a>
+                  <a href="img/dgsTruck/dgsTruck3-min.png" data-lightbox="dgsTruck">Image #3</a>
+                  <a href="img/dgsTruck/dgsTruck4-min.png" data-lightbox="dgsTruck">Image #4</a>
+                </figure>
+                
+                <div class="portfolio-info">
+                  <h4 class="dgsTruck_title"></h4>
+                  <p class="dgsTruck_content">
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
+            <div class="portfolio-wrap">
+              <figure>
+                <img src="img/dgsCarrier/dgsCarrier1.jpg" class="img-fluid" alt="">
+                <a href="img/dgsCarrier/dgsCarrier1.jpg" class="link-preview" data-lightbox="dgsCarrier" data-title="Web 3" title="Preview"><i class="ion ion-eye"></i></a>
+                <a href="img/dgsCarrier/dgsCarrier2.jpg" data-lightbox="dgsCarrier">Image #2</a>
+                <a href="img/dgsCarrier/dgsCarrier3.jpg" data-lightbox="dgsCarrier">Image #3</a>
+                <a href="img/dgsCarrier/dgsCarrier3.jpg" data-lightbox="dgsCarrier">Image #4</a>
+              </figure>
+          
+              <div class="portfolio-info">
+                <h4 class="dgsCarrier_title">
+                </h4>
+                <p class="dgsCarrier_content">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- #portfolio -->
+
+
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact" class="section-bg wow fadeInUp">
+      <div class="container">
+
+        <div class="section-header">
+          <h3 class="contact-header-title"></h3>
+        </div>
+
+        <div class="row contact-info">
+
+          <div class="col-md-4">
+            <div class="contact-address">
+              <i class="ion-ios-location-outline"></i>
+              <h3 class="address"></h3>
+              <address>Orbeli 4 Street, Yerevan, Armenia</address>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-phone">
+              <i class="ion-ios-telephone-outline"></i>
+              <h3 class="phone-number"></h3>
+              <p><a href="tel:+37498229898">+374 98 22 98 98</a></p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-email">
+              <i class="ion-ios-email-outline"></i>
+              <h3 class="email"></h3>
+              <p><a href="mailto:info@digisoft-it.com">info@digisoft-it.com</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form">
+          <div id="sendmessage"></div>
+          <div id="errormessage"></div>
+          <form action="" method="post" role="form" class="contactForm">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <input type="email" class="form-control" name="from" id="email" placeholder="Your Email"  data-rule="email"data-msg=""  />
+                <div class="validation"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="required" data-msg="" />
+              <div class="validation"></div>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" name="text" id="message" rows="5" data-rule="required" data-msg="" placeholder="Message"></textarea>
+              <div class="validation"></div>
+            </div>
+            <div class="text-center"><button type="submit" class="message_button"></button></div>
+          </form>
+        </div>
+      </div>
+    </section><!-- #contact -->
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h3>DigiSoft</h3>
+            <p class="footer_content">
+            </p>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-contact">
+            <h4 class="footer_contact">Contact Us</h4>
+            <p>
+              <span class="footer_address_value">Orbeli Brothers Street <br>
+              Yerevan, Armenia</span> <br>
+              <strong class="footer_phone">Phone:</strong> +374 98 22 98 98<br>
+              <strong class="footer_email">Email:</strong> info@digisoft-it.com<br>
+            </p>
+
+            <div class="social-links">
+              <a href="https://www.facebook.com/DigiSoftLLC/"   target="_blank" rel="noopener noreferrer" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="https://www.linkedin.com/company/digisoft-tech/"  target="_blank" rel="noopener noreferrer" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  <!-- Uncomment below i you want to use a preloader -->
+  <!-- <div id="preloader"></div> -->
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/counterup/counterup.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/isotope/isotope.pkgd.min.js"></script>
+  <script src="lib/lightbox/js/lightbox.min.js"></script>
+  <script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+  <script src="contactform/contactform.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/translate.js"></script>
+
 </body>
 </html>
