@@ -225,12 +225,19 @@ h6 {
 
 #intro .carousel-content {
   text-align: center;
+ 
 }
 
 #intro h2 {
   color: #fff;
   margin-bottom: 30px;
   font-size: 48px;
+    font-size: 72px;
+    background: -webkit-linear-gradient(#84FF3D, #2EABFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0);
+    background-clip:text;
+
   font-weight: 700;
 }
 
@@ -569,7 +576,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------*/
 
 .section-header h3 {
-  font-size: 32px;
+  font-size: 30px;
   color: #111;
   text-transform: uppercase;
   text-align: center;
@@ -963,7 +970,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 #portfolio .portfolio-item figure {
   background: #000;
   overflow: hidden;
-  height: 240px;
+  height: 110px;
   position: relative;
   border-radius: 4px 4px 0 0;
   margin: 0;
@@ -1017,7 +1024,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #portfolio .portfolio-item figure:hover .link-preview {
   opacity: 1;
-  left: calc(50% - 44px);
+  left: calc(50% - 19px);
 }
 
 #portfolio .portfolio-item figure:hover .link-details {
@@ -1029,7 +1036,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   background: #fff;
   text-align: center;
   padding: 30px;
-  height: 90px;
+  height: 230px;
   border-radius: 0 0 3px 3px;
 }
 
@@ -1054,8 +1061,9 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin: 0;
   color: #b8b8b8;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
   text-transform: uppercase;
+  text-align: start;
 }
 
 /* Clients Section
