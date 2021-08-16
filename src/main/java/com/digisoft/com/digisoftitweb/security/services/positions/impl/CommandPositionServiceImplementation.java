@@ -51,7 +51,7 @@ public class CommandPositionServiceImplementation implements CommandPositionServ
     public void fillManagementData() {
         List<PositionsCategories> allCategories = positionCategoryRepository.findAll();
         for (PositionsCategories allCategory : allCategories) {
-            if (allCategory.getPositionCategoryName().equalsIgnoreCase("Management")) {
+            if (allCategory.getPositionCategoryName().equalsIgnoreCase("Stuff")) {
                 for (int i = 0; i < positionsManagement.length; i++) {
                     Positions positions = new Positions();
                     positions.setPositionsCategories(allCategory);

@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 public class PositionCategoryServiceImpl implements PositionsCategoryService {
     private final PositionCategoryRepository positionCategoryRepository;
-    private final String[] positionCategories = {"Administration", "Students", "Teachers"};
+    private final String[] positionCategories = {"Administration", "Stuff"};
 
     @Override
     public void fillData() {

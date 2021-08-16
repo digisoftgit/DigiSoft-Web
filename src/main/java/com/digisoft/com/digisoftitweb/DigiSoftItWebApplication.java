@@ -58,7 +58,7 @@ public class DigiSoftItWebApplication extends SpringBootServletInitializer imple
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info("run(String... args)");
         List<PositionsResponse> allPositions = positionsMapper.toResponse(positionsRepository.findAll());
         log.info("allPositions {} ",allPositions);
@@ -66,9 +66,11 @@ public class DigiSoftItWebApplication extends SpringBootServletInitializer imple
             roleControllerService.createAdminRole( RoleRequest.builder().name("admin").build());
             log.info("roleControllerService.createAdminRole( RoleRequest.builder().name(\"admin\").build()); ");
             positionsCategoryServiceImpl.fillData();
+            log.info("positionsCategoryServiceImpl.fillData();");
             positionsService.fillAdministrationData();
+            log.info("positionsService.fillAdministrationData();");
             positionsService.fillManagementData();
-            log.info(" positionsCategoryServiceImpl.fillData(); ");
+            log.info("positionsService.fillManagementData();");
             commandUserImplementation.addAdmin();
             log.info("commandUserImplementation.addAdmin(); ");
         }
