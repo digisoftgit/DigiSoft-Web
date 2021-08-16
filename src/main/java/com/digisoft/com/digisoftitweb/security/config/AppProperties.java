@@ -1,4 +1,4 @@
-package com.digisoft.com.digisoftitweb;
+package com.digisoft.com.digisoftitweb.security.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,5 +1,6 @@
 package com.digisoft.com.digisoftitweb;
 
+import com.digisoft.com.digisoftitweb.security.config.AppProperties;
 import com.digisoft.com.digisoftitweb.security.entity.position.response.PositionsResponse;
 import com.digisoft.com.digisoftitweb.security.entity.role.request.RoleRequest;
 import com.digisoft.com.digisoftitweb.security.mapper.PositionsMapper;

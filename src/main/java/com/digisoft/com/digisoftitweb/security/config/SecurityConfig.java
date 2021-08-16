@@ -1,4 +1,4 @@
-package com.digisoft.com.digisoftitweb;
+package com.digisoft.com.digisoftitweb.security.config;
 
 import com.digisoft.com.digisoftitweb.security.security.CustomUserDetailsService;
 import com.digisoft.com.digisoftitweb.security.security.RestAuthenticationEntryPoint;

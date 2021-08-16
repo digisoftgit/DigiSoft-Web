@@ -1,6 +1,6 @@
 package com.digisoft.com.digisoftitweb.security.security.oauth2;
 
-import com.digisoft.com.digisoftitweb.AppProperties;
+import com.digisoft.com.digisoftitweb.security.config.AppProperties;
 import com.digisoft.com.digisoftitweb.security.exception.BadRequestsException;
 import com.digisoft.com.digisoftitweb.security.security.TokenProvider;
 import com.digisoft.com.digisoftitweb.security.util.CookieUtils;

@@ -1,7 +1,7 @@
 package com.digisoft.com.digisoftitweb.security.security;
 
 
-import com.digisoft.com.digisoftitweb.AppProperties;
+import com.digisoft.com.digisoftitweb.security.config.AppProperties;
 import com.digisoft.com.digisoftitweb.security.entity.webuser.WebUser;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
