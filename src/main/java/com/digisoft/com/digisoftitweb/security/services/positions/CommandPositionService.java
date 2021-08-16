@@ -1,6 +1,7 @@
 package com.digisoft.com.digisoftitweb.security.services.positions;
 
 public interface CommandPositionService {
-    void academyData();
+    void fillAdministrationData();
+    void fillManagementData();
 
 }

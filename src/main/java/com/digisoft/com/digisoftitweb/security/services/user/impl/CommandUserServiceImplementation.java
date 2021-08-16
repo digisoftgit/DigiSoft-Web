@@ -23,17 +23,19 @@ public class CommandUserServiceImplementation implements CommandUserService {
 
     @Override
     public void addAdmin() {
-        WebUser user = new WebUser();
-        user.setFirstName("General");
-        user.setLastName("Admin");
-        user.setEmail("admin@admin.com");
-        user.setPassword("mnbvcxz00A!");
-        user.setProvider(AuthProvider.local);
-        user.setEmailVerified(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_ADMIN")));
+        boolean adminUser = userRepository.existsByEmail("admin@admin.com");
+        if(!adminUser) {
+            WebUser user = new WebUser();
+            user.setFirstName("General");
+            user.setLastName("Admin");
+            user.setEmail("admin@admin.com");
+            user.setPassword("mnbvcxz00A!");
+            user.setProvider(AuthProvider.local);
+            user.setEmailVerified(true);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_ADMIN")));
 
-        userRepository.save(user);
-
+            userRepository.save(user);
+        }
     }
 }
