@@ -1,6 +1,6 @@
-package com.digisoft.com.digisoftitweb.main.controller;
+package com.digisoft.com.digisoftitweb.mainpage.controller;
 
-import com.digisoft.com.digisoftitweb.main.api.MainPage;
+import com.digisoft.com.digisoftitweb.mainpage.api.MainPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
