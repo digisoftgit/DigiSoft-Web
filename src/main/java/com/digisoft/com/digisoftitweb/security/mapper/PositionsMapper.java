@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PositionsMapper {
     private final PositionCategoryMapper positionCategoryMapper;
-    private static final String ROLE_START = "ROLE_";
 
     public List<PositionsResponse> toResponse(List<Positions> all) {
         return all.stream()
@@ -25,39 +24,25 @@ public class PositionsMapper {
                         e.getId(),
                         e.getPositionName(),
                         e.getPositionIcon(),
-                        e.getPositionDetails(),
-                        false
+                        e.getPositionDetails()
                 ))
                 .collect(Collectors.toList());
     }
 
     public List<PositionsResponse> getRolesPositions(List<Positions> all, List<Role> roleList) {
         Set<PositionsResponse> setResponse = new LinkedHashSet<>();
-        boolean isSelectedRole =false;
             for (Positions value : all) {
-                isSelectedRole = checkSelectedRoles(roleList,value);
-                PositionsResponse positions = new PositionsResponse();
-                positions.setId(value.getId());
-                positions.setPositionIcon(value.getPositionIcon());
-                positions.setPositionName(value.getPositionName());
-                positions.setPositionDetails(value.getPositionDetails());
-                positions.setPositionsCategoriesResponse(positionCategoryMapper.toPositionCategoryResponse(value.getPositionsCategories()));
-                positions.setSelected(isSelectedRole);
+                PositionsResponse positions = PositionsResponse.builder()
+                        .id(value.getId())
+                        .positionIcon(value.getPositionIcon())
+                        .positionName(value.getPositionName())
+                        .positionDetails(value.getPositionDetails())
+                        .positionsCategoriesResponse(positionCategoryMapper.toPositionCategoryResponse(value.getPositionsCategories()))
+                        .build();
                 assert false;
                 setResponse.add(positions);
 
         }
         return new ArrayList<>(setResponse);
     }
-
-    private boolean checkSelectedRoles(List<Role>  role, Positions value) {
-        return role.stream().anyMatch(item -> getFinalName(value.getPositionName()).contains(item.getName()));
-    }
-
-    private String getFinalName(String value) {
-        String finalRoleName = "";
-        finalRoleName = value.contains(" ") ? value.replace(" ", "_") : value.toUpperCase();
-        return ROLE_START + finalRoleName.toUpperCase();
-    }
-
 }

@@ -17,7 +17,7 @@ public class UserUtils {
         Object webUsers = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (webUsers.equals("anonymousUser")) throw new NotAuthorizedUserAccessException();
         Long userId = ((UserBuilder) webUsers).getId();
-        return webUserRepository.getOne(userId);
+        return webUserRepository.getById(userId);
 
     }
 }

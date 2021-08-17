@@ -20,7 +20,7 @@ public class PrivilegesControllerServiceImpl implements PrivilegeControllerServi
     private final PrivilegeMapper privilegeMapper;
 
     @Override
-    public BaseResponse<?> all(String accessToken) {
+    public BaseResponse<?> all() {
 
         List<PrivilegeResponse> response = null;
         try {
@@ -28,7 +28,7 @@ public class PrivilegesControllerServiceImpl implements PrivilegeControllerServi
         } catch (Exception e) {
             return new BaseResponse<>(new Date(), false, HttpStatus.CONFLICT, e.getMessage());
         }
-        return new BaseResponse<>(new Date(), true, HttpStatus.OK, response);
+        return new BaseResponse(new Date(), true, HttpStatus.OK, response);
     }
 
 

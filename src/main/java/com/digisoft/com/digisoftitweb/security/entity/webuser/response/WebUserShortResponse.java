@@ -20,8 +20,8 @@ public class WebUserShortResponse {
     private String lastName;
     private String email;
 
-    private String imageUrl = "https://";
-    private String phoneNumber = "";
+    private String imageUrl;
+    private String phoneNumber;
 
     private List<String> roles;
 }

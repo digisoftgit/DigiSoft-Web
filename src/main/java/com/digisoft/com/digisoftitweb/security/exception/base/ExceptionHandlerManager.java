@@ -3,6 +3,7 @@ package com.digisoft.com.digisoftitweb.security.exception.base;
 import com.digisoft.com.digisoftitweb.security.base.BaseResponse;
 import com.digisoft.com.digisoftitweb.security.exception.AdminCanNotBeDeleteException;
 import com.digisoft.com.digisoftitweb.security.exception.AdminCanNotBeUpdateException;
+import com.digisoft.com.digisoftitweb.security.exception.AdminDisabledUserException;
 import com.digisoft.com.digisoftitweb.security.exception.BadRequestsException;
 import com.digisoft.com.digisoftitweb.security.exception.CookiesNotFoundException;
 import com.digisoft.com.digisoftitweb.security.exception.DuplicatedPositionException;
@@ -29,6 +30,12 @@ import java.util.Date;
 @RestControllerAdvice
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class ExceptionHandlerManager {
+
+    @ExceptionHandler(AdminDisabledUserException.class)
+    public ResponseEntity<BaseResponse<?>> AdminDisabledUserException(AdminDisabledUserException adminDisabledUserException){
+        BaseResponse<?> baseResponse = new BaseResponse<>(new Date(),false,HttpStatus.BAD_REQUEST,adminDisabledUserException.getMessage());
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<BaseResponse<?>> UserNotFoundException(UserNotFoundException userNotFoundException){

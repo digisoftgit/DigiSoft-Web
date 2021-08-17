@@ -19,6 +19,5 @@ public class PositionsResponse {
     private String positionName;
     private String positionIcon;
     private String positionDetails;
-    private boolean isSelected = false;
 
 }

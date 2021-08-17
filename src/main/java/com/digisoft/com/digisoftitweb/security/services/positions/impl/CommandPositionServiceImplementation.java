@@ -1,14 +1,19 @@
 package com.digisoft.com.digisoftitweb.security.services.positions.impl;
 
 
+import com.digisoft.com.digisoftitweb.security.base.BaseResponse;
 import com.digisoft.com.digisoftitweb.security.entity.position.Positions;
+import com.digisoft.com.digisoftitweb.security.entity.position.response.PositionsResponse;
 import com.digisoft.com.digisoftitweb.security.entity.positionscategory.PositionsCategories;
+import com.digisoft.com.digisoftitweb.security.mapper.PositionsMapper;
 import com.digisoft.com.digisoftitweb.security.repository.PositionCategoryRepository;
 import com.digisoft.com.digisoftitweb.security.repository.PositionsRepository;
 import com.digisoft.com.digisoftitweb.security.services.positions.CommandPositionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,6 +22,7 @@ import java.util.List;
 public class CommandPositionServiceImplementation implements CommandPositionService {
     private final PositionCategoryRepository positionCategoryRepository;
     private final PositionsRepository positionsRepository;
+    private final PositionsMapper positionsMapper;
 
     //administration full pack
     private final String[] positionsAdministration = {"Administration"};
@@ -64,4 +70,9 @@ public class CommandPositionServiceImplementation implements CommandPositionServ
         }
     }
 
+    @Override
+    public BaseResponse<?> all() {
+        List<PositionsResponse> response = positionsMapper.toResponse(positionsRepository.findAll());
+        return new BaseResponse<>(new Date(), true,HttpStatus.OK,response);
+    }
 }

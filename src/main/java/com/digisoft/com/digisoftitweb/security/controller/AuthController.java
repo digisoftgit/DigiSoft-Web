@@ -3,10 +3,12 @@ package com.digisoft.com.digisoftitweb.security.controller;
 import com.digisoft.com.digisoftitweb.security.annotations.binding.BindingManager;
 import com.digisoft.com.digisoftitweb.security.api.AuthApi;
 import com.digisoft.com.digisoftitweb.security.entity.role.Role;
+import com.digisoft.com.digisoftitweb.security.entity.role.request.RoleRequest;
 import com.digisoft.com.digisoftitweb.security.entity.webuser.WebUser;
 import com.digisoft.com.digisoftitweb.security.entity.webuser.request.WebUserRequest;
 import com.digisoft.com.digisoftitweb.security.entity.webuser.response.WebUserShortResponse;
 import com.digisoft.com.digisoftitweb.security.enums.AuthProvider;
+import com.digisoft.com.digisoftitweb.security.exception.AdminDisabledUserException;
 import com.digisoft.com.digisoftitweb.security.exception.EmailAlreadyUsedException;
 import com.digisoft.com.digisoftitweb.security.exception.EmailNotVerifiedException;
 import com.digisoft.com.digisoftitweb.security.exception.OldPasswordErrorException;
@@ -14,19 +16,24 @@ import com.digisoft.com.digisoftitweb.security.exception.RoleNameNotExistExcepti
 import com.digisoft.com.digisoftitweb.security.exception.UserNotFoundException;
 import com.digisoft.com.digisoftitweb.security.payload.ApiResponse;
 import com.digisoft.com.digisoftitweb.security.payload.AuthResponse;
+import com.digisoft.com.digisoftitweb.security.payload.CheckResponse;
 import com.digisoft.com.digisoftitweb.security.payload.LoginRequest;
+import com.digisoft.com.digisoftitweb.security.payload.PasswordChangeResponse;
 import com.digisoft.com.digisoftitweb.security.payload.SignUpRequest;
 import com.digisoft.com.digisoftitweb.security.payload.UserResponse;
+import com.digisoft.com.digisoftitweb.security.repository.PositionsRepository;
 import com.digisoft.com.digisoftitweb.security.repository.RoleRepository;
 import com.digisoft.com.digisoftitweb.security.repository.WebUserRepository;
 import com.digisoft.com.digisoftitweb.security.security.TokenProvider;
 import com.digisoft.com.digisoftitweb.security.util.CookieUtils;
+import com.digisoft.com.digisoftitweb.security.util.RolEUtils;
 import com.digisoft.com.digisoftitweb.security.util.UserUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,6 +47,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -68,6 +76,10 @@ public class AuthController<T> implements AuthApi {
 
     private final UserUtils userUtils;
 
+    private final PositionsRepository positionsRepository;
+
+    private final RolEUtils rolEUtils;
+
 
     @SneakyThrows
     @Override
@@ -81,7 +93,10 @@ public class AuthController<T> implements AuthApi {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         Optional<WebUser> webUser = userRepository.findByEmail(loginRequest.getEmail());
+
         if (webUser.get().getEmailVerified()) {
+            if (!webUser.isPresent()) throw new UserPrincipalNotFoundException("User info not found.");
+            if (!webUser.get().getEnable()) throw new AdminDisabledUserException("Your account is not longer available, please contact administration.");
             String token = tokenProvider.createToken(authentication);
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
             log.info("authorities {} ", authorities);
@@ -109,12 +124,13 @@ public class AuthController<T> implements AuthApi {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public ResponseEntity<?> registerUser(@Valid SignUpRequest signUpRequest,
                                           BindingResult bindingResult) {
         bindingManager.bindingCheck(bindingResult);
         if (userRepository.existsByEmail(signUpRequest.getEmail())) throw new EmailAlreadyUsedException();
-        if (roleRepository.existsByName(signUpRequest.getRoles().getName()) == null)
+        if (positionsRepository.existsByName(signUpRequest.getRoles().getName()) == null)
             throw new RoleNameNotExistException();
 
         WebUser user = new WebUser();
@@ -123,12 +139,13 @@ public class AuthController<T> implements AuthApi {
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
         user.setProvider(AuthProvider.local);
-        if (signUpRequest.getRoles().getName().toLowerCase().contains("admin")) {
+        if (signUpRequest.getRoles().getName().toLowerCase().contains("admin") || signUpRequest.getRoles().getName().toLowerCase().contains("administration")) {
             user.setEmailVerified(true);
         }
         user.setEmailVerified(false);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singletonList(roleRepository.findByName(signUpRequest.getRoles().getName())));
+        String role = rolEUtils.getFinalName(signUpRequest.getRoles().getName());
+        user.setRoles(Collections.singletonList(roleRepository.findByName(role)));
         WebUser result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
@@ -142,8 +159,22 @@ public class AuthController<T> implements AuthApi {
     @Override
     public CompletableFuture<ResponseEntity<?>> checkUser() {
         WebUser webUser = userUtils.getUserId();
-        return CompletableFuture.completedFuture(ResponseEntity.accepted()
-                .body(new ApiResponse(true, webUser.getEmail())));
+        CheckResponse authResponse = CheckResponse
+                .builder()
+                .webUser(WebUserShortResponse
+                        .builder()
+                        .id(webUser.getId())
+                        .email(webUser.getEmail())
+                        .firstName(webUser.getFirstName())
+                        .lastName(webUser.getLastName())
+                        .imageUrl(webUser.getImageUrl())
+                        .phoneNumber(webUser.getPhoneNumber())
+                        .roles(webUser.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
+                        .build())
+                .build();
+        return CompletableFuture.completedFuture(
+                ResponseEntity.accepted()
+                        .body(authResponse));
     }
 
 
@@ -159,6 +190,7 @@ public class AuthController<T> implements AuthApi {
                 ResponseEntity.ok().body(new ApiResponse(true, "logout successfully.", logoutTokenSerialize));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public ResponseEntity<?> changePass(HttpServletRequest request,
                                         WebUserRequest webUserRequest,
@@ -176,7 +208,7 @@ public class AuthController<T> implements AuthApi {
         userRepository.save(oldUser);
 
         logout(request);
-        return ResponseEntity.accepted().body(new ApiResponse(true, "Password changed successfully."));
+        return ResponseEntity.accepted().body(new PasswordChangeResponse(true, "Password changed successfully."));
 
 
     }
@@ -201,19 +233,21 @@ public class AuthController<T> implements AuthApi {
                         .build());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public ResponseEntity<?> updateUserDetail(WebUserRequest webUserRequest) {
         if (userRepository.existsByEmail(webUserRequest.getEmail())) throw new EmailAlreadyUsedException();
         WebUser webUser = userUtils.getUserId();
-        WebUser user = new WebUser();
-        user.setId(webUserRequest.getId());
-        user.setFirstName(webUserRequest.getFirstName());
-        user.setLastName(webUserRequest.getLastName());
-        user.setEmail(webUserRequest.getEmail());
-        user.setProvider(AuthProvider.local);
-        user.setEmailVerified(false);
-        user.setRoles(webUser.getRoles());
-        user.setPassword(webUser.getPassword());
+        if(webUser == null || webUser.getId()!=webUserRequest.getId()) throw new UserNotFoundException("User with provided data is not found.");
+        WebUser user = WebUser.builder()
+                .email(webUserRequest.getEmail())
+                .firstName(webUserRequest.getFirstName())
+                .lastName(webUserRequest.getLastName())
+                .provider(AuthProvider.local)
+                .emailVerified(false)
+                .password(webUser.getPassword())
+                .roles(webUser.getRoles())
+                .build();
         userRepository.save(user);
         ResponseEntity<?> response = userDetails();
         return ResponseEntity.ok().body(response);

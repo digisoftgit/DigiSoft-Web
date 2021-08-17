@@ -65,6 +65,8 @@ public class DigiSoftItWebApplication extends SpringBootServletInitializer imple
         if (allPositions.isEmpty()) {
             roleControllerService.createAdminRole( RoleRequest.builder().name("admin").build());
             log.info("roleControllerService.createAdminRole( RoleRequest.builder().name(\"admin\").build()); ");
+            roleControllerService.createOtherRoles();
+            log.info("roleControllerService.createAdminRole( RoleRequest.builder().name(\"admin\").build())");
             positionsCategoryServiceImpl.fillData();
             log.info("positionsCategoryServiceImpl.fillData();");
             positionsService.fillAdministrationData();

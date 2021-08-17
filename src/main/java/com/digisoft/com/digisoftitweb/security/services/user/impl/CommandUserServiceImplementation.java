@@ -18,22 +18,27 @@ import java.util.Collections;
 public class CommandUserServiceImplementation implements CommandUserService {
 
     private final WebUserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void addAdmin() {
         boolean adminUser = userRepository.existsByEmail("admin@admin.com");
         if(!adminUser) {
-            WebUser user = new WebUser();
-            user.setFirstName("General");
-            user.setLastName("Admin");
-            user.setEmail("admin@admin.com");
-            user.setPassword("mnbvcxz00A!");
-            user.setProvider(AuthProvider.local);
-            user.setEmailVerified(true);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_ADMIN")));
+            WebUser user = WebUser.builder()
+                    .firstName("General")
+                    .lastName("Admin")
+                    .name("admin")
+                    .email("admin@admin.com")
+                    .password(passwordEncoder.encode("mnbvcxz00A!"))
+                    .emailVerified(true)
+                    .imageUrl("https://")
+                    .enable(true)
+                    .provider(AuthProvider.local)
+                    .phoneNumber("")
+                    .phoneNumberVerified(true)
+                    .roles(Collections.singletonList(roleRepository.findByName("ROLE_ADMIN")))
+                    .build();
 
             userRepository.save(user);
         }

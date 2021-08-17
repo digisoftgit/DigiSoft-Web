@@ -1,6 +1,7 @@
 package com.digisoft.com.digisoftitweb.security.entity.privelege;
 
 import com.digisoft.com.digisoftitweb.security.entity.base.BaseEntity;
+import com.digisoft.com.digisoftitweb.security.entity.position.Positions;
 import com.digisoft.com.digisoftitweb.security.entity.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,5 @@ public class Privilege extends BaseEntity {
     private String name;
 
     @ManyToMany(mappedBy = "privileges")
-    private Collection<Role> roles;
+    private Collection<Positions> roles;
 }
