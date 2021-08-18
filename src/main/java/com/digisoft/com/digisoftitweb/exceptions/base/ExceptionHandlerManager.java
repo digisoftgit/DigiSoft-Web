@@ -1,5 +1,8 @@
-package com.digisoft.com.digisoftitweb.security.exception.base;
+package com.digisoft.com.digisoftitweb.exceptions.base;
 
+import com.digisoft.com.digisoftitweb.exceptions.LectureAlreadyExistException;
+import com.digisoft.com.digisoftitweb.exceptions.LectureNameNotExistException;
+import com.digisoft.com.digisoftitweb.exceptions.lectureNotFoundException;
 import com.digisoft.com.digisoftitweb.security.base.BaseResponse;
 import com.digisoft.com.digisoftitweb.security.exception.AdminCanNotBeDeleteException;
 import com.digisoft.com.digisoftitweb.security.exception.AdminCanNotBeUpdateException;
@@ -30,6 +33,24 @@ import java.util.Date;
 @RestControllerAdvice
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class ExceptionHandlerManager {
+
+    @ExceptionHandler(lectureNotFoundException.class)
+    public ResponseEntity<BaseResponse<?>> lectureNotFoundException(lectureNotFoundException lectureNotFoundException){
+        BaseResponse<?> baseResponse = new BaseResponse<>(new Date(),false,HttpStatus.BAD_REQUEST,lectureNotFoundException.getMessage());
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(LectureAlreadyExistException.class)
+    public ResponseEntity<BaseResponse<?>> LectureAlreadyExistException(LectureAlreadyExistException lectureAlreadyExistException){
+        BaseResponse<?> baseResponse = new BaseResponse<>(new Date(),false,HttpStatus.BAD_REQUEST,lectureAlreadyExistException.getMessage());
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(LectureNameNotExistException.class)
+    public ResponseEntity<BaseResponse<?>> LectureNameNotExistException(LectureNameNotExistException lectureNameNotExistException){
+        BaseResponse<?> baseResponse = new BaseResponse<>(new Date(),false,HttpStatus.BAD_REQUEST,lectureNameNotExistException.getMessage());
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
 
     @ExceptionHandler(AdminDisabledUserException.class)
     public ResponseEntity<BaseResponse<?>> AdminDisabledUserException(AdminDisabledUserException adminDisabledUserException){

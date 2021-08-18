@@ -1,5 +1,6 @@
 package com.digisoft.com.digisoftitweb.security.payload;
 
+import com.digisoft.com.digisoftitweb.lectures.entity.LecturesEntity;
 import com.digisoft.com.digisoftitweb.security.annotations.PasswordPolicy;
 import com.digisoft.com.digisoftitweb.security.entity.role.Role;
 import lombok.AllArgsConstructor;
@@ -32,5 +33,7 @@ public class SignUpRequest {
     private String password;
 
     private Role roles;
+
+    private LecturesEntity lectures;
 
 }

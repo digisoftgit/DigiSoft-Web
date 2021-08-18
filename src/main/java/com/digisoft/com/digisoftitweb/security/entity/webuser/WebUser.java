@@ -1,5 +1,6 @@
 package com.digisoft.com.digisoftitweb.security.entity.webuser;
 
+import com.digisoft.com.digisoftitweb.lectures.entity.LecturesEntity;
 import com.digisoft.com.digisoftitweb.security.entity.base.BaseEntity;
 import com.digisoft.com.digisoftitweb.security.entity.role.Role;
 import com.digisoft.com.digisoftitweb.security.enums.AuthProvider;
@@ -17,7 +18,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
@@ -82,6 +82,15 @@ public class WebUser extends BaseEntity {
     private Collection<Role> roles;
 
     private Boolean isCommandCreated;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_lecture",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "lectures_id", referencedColumnName = "id"))
+    private Collection<LecturesEntity> lectures;
 
 
 }

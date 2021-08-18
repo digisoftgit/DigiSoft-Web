@@ -1,5 +1,7 @@
 package com.digisoft.com.digisoftitweb.security.controller;
 
+import com.digisoft.com.digisoftitweb.exceptions.LectureNameNotExistException;
+import com.digisoft.com.digisoftitweb.lectures.repository.LecturesRepository;
 import com.digisoft.com.digisoftitweb.security.annotations.binding.BindingManager;
 import com.digisoft.com.digisoftitweb.security.api.AuthApi;
 import com.digisoft.com.digisoftitweb.security.entity.role.Role;
@@ -80,6 +82,8 @@ public class AuthController<T> implements AuthApi {
 
     private final RolEUtils rolEUtils;
 
+    private final LecturesRepository lecturesRepository;
+
 
     @SneakyThrows
     @Override
@@ -130,29 +134,28 @@ public class AuthController<T> implements AuthApi {
                                           BindingResult bindingResult) {
         bindingManager.bindingCheck(bindingResult);
         if (userRepository.existsByEmail(signUpRequest.getEmail())) throw new EmailAlreadyUsedException();
-        if (positionsRepository.existsByName(signUpRequest.getRoles().getName()) == null)
-            throw new RoleNameNotExistException();
-
+        if (positionsRepository.existsByName(signUpRequest.getRoles().getName()) == null) throw new RoleNameNotExistException();
+        if (lecturesRepository.existsByName(signUpRequest.getLectures().getLectureName()) == null) throw new LectureNameNotExistException();
         WebUser user = new WebUser();
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
         user.setProvider(AuthProvider.local);
-        if (signUpRequest.getRoles().getName().toLowerCase().contains("admin") || signUpRequest.getRoles().getName().toLowerCase().contains("administration")) {
-            user.setEmailVerified(true);
-        }
+        if (signUpRequest.getRoles().getName().toLowerCase().contains("admin") || signUpRequest.getRoles().getName().toLowerCase().contains("administration")) user.setEmailVerified(true);
         user.setEmailVerified(false);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String role = rolEUtils.getFinalName(signUpRequest.getRoles().getName());
         user.setRoles(Collections.singletonList(roleRepository.findByName(role)));
-        WebUser result = userRepository.save(user);
+        String lecture = signUpRequest.getLectures().getLectureName();
+        user.setLectures(Collections.singletonList(lecturesRepository.findByName(lecture)));
+        userRepository.save(user);
+//        URI location = ServletUriComponentsBuilder
+//                .fromCurrentContextPath().path("/user/me")
+//                .buildAndExpand(result.getId()).toUri();
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/user/me")
-                .buildAndExpand(result.getId()).toUri();
-        return ResponseEntity.created(location)
-                .body(new ApiResponse(true, "User registered successfully."));
+        return ResponseEntity.ok()
+                        .body(new ApiResponse(true, "User registered successfully."));
     }
 
     @Async

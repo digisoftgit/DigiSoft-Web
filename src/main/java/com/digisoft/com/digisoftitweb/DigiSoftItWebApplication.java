@@ -1,5 +1,6 @@
 package com.digisoft.com.digisoftitweb;
 
+import com.digisoft.com.digisoftitweb.lectures.service.LecturesService;
 import com.digisoft.com.digisoftitweb.security.config.AppProperties;
 import com.digisoft.com.digisoftitweb.security.entity.position.response.PositionsResponse;
 import com.digisoft.com.digisoftitweb.security.entity.role.request.RoleRequest;
@@ -35,6 +36,7 @@ public class DigiSoftItWebApplication extends SpringBootServletInitializer imple
     private final CommandRoleService roleControllerService;
     private final PositionsMapper positionsMapper;
     private final PositionsRepository positionsRepository;
+    private final LecturesService lectureService;
 
     public static void main(String[] args) {
         SpringApplication.run(DigiSoftItWebApplication.class, args);
@@ -75,6 +77,8 @@ public class DigiSoftItWebApplication extends SpringBootServletInitializer imple
             log.info("positionsService.fillManagementData();");
             commandUserImplementation.addAdmin();
             log.info("commandUserImplementation.addAdmin(); ");
+            lectureService.fillLectures();
+
         }
     }
 
