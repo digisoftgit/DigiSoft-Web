@@ -6,6 +6,7 @@ import com.digisoft.com.digisoftitweb.security.payload.SignUpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,5 +42,8 @@ public interface AuthApi {
 
     @PutMapping("/user/update")
     ResponseEntity<?> updateUserDetail(@RequestBody WebUserRequest webUserRequest);
+
+    @PostMapping("/role/{id}")
+    ResponseEntity<?> userRole(@PathVariable("id") Long id);
 
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Transient;
 import java.util.List;
 
@@ -20,12 +21,12 @@ public class WebUserResponse {
     private String firstName;
 
     private String lastName;
-
-    private String username = "";
+    @Column(columnDefinition="varchar 255 default ''")
+    private String username;
 
     private String email;
-
-    private String imageUrl = "https://";
+    @Column(columnDefinition="varchar 255 default 'https://'")
+    private String imageUrl;
 
     private Boolean emailVerified = false;
 
@@ -33,12 +34,12 @@ public class WebUserResponse {
     private String password;
 
     private AuthProvider provider = AuthProvider.local;
-
-    private String providerId = "";
-
-    private Boolean phoneNumberVerified = false;
-
-    private String phoneNumber = "";
+    @Column(columnDefinition="varchar 255 default ''")
+    private String providerId;
+    @Column(columnDefinition="tinyint(1) default 1")
+    private Boolean phoneNumberVerified;
+    @Column(columnDefinition="varchar 255 default ''")
+    private String phoneNumber;
 
     private Boolean enable = true;
 

@@ -1,13 +1,14 @@
 package com.digisoft.com.digisoftitweb.security.controller;
 
 import com.digisoft.com.digisoftitweb.exceptions.LectureNameNotExistException;
+import com.digisoft.com.digisoftitweb.lectures.entity.LecturesEntity;
 import com.digisoft.com.digisoftitweb.lectures.repository.LecturesRepository;
 import com.digisoft.com.digisoftitweb.security.annotations.binding.BindingManager;
 import com.digisoft.com.digisoftitweb.security.api.AuthApi;
 import com.digisoft.com.digisoftitweb.security.entity.role.Role;
-import com.digisoft.com.digisoftitweb.security.entity.role.request.RoleRequest;
 import com.digisoft.com.digisoftitweb.security.entity.webuser.WebUser;
 import com.digisoft.com.digisoftitweb.security.entity.webuser.request.WebUserRequest;
+import com.digisoft.com.digisoftitweb.security.entity.webuser.response.WebUserRoleResponse;
 import com.digisoft.com.digisoftitweb.security.entity.webuser.response.WebUserShortResponse;
 import com.digisoft.com.digisoftitweb.security.enums.AuthProvider;
 import com.digisoft.com.digisoftitweb.security.exception.AdminDisabledUserException;
@@ -23,6 +24,7 @@ import com.digisoft.com.digisoftitweb.security.payload.LoginRequest;
 import com.digisoft.com.digisoftitweb.security.payload.PasswordChangeResponse;
 import com.digisoft.com.digisoftitweb.security.payload.SignUpRequest;
 import com.digisoft.com.digisoftitweb.security.payload.UserResponse;
+import com.digisoft.com.digisoftitweb.security.payload.UserRoleResponse;
 import com.digisoft.com.digisoftitweb.security.repository.PositionsRepository;
 import com.digisoft.com.digisoftitweb.security.repository.RoleRepository;
 import com.digisoft.com.digisoftitweb.security.repository.WebUserRepository;
@@ -44,11 +46,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.URI;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.Collection;
 import java.util.Collections;
@@ -135,7 +135,7 @@ public class AuthController<T> implements AuthApi {
         bindingManager.bindingCheck(bindingResult);
         if (userRepository.existsByEmail(signUpRequest.getEmail())) throw new EmailAlreadyUsedException();
         if (positionsRepository.existsByName(signUpRequest.getRoles().getName()) == null) throw new RoleNameNotExistException();
-        if (lecturesRepository.existsByName(signUpRequest.getLectures().getLectureName()) == null) throw new LectureNameNotExistException();
+        if (!lecturesRepository.existsById(signUpRequest.getLectures().getId())) throw new LectureNameNotExistException();
         WebUser user = new WebUser();
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
@@ -147,15 +147,15 @@ public class AuthController<T> implements AuthApi {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String role = rolEUtils.getFinalName(signUpRequest.getRoles().getName());
         user.setRoles(Collections.singletonList(roleRepository.findByName(role)));
-        String lecture = signUpRequest.getLectures().getLectureName();
-        user.setLectures(Collections.singletonList(lecturesRepository.findByName(lecture)));
+        LecturesEntity lecture = lecturesRepository.getById(signUpRequest.getLectures().getId());
+        user.setLectures(Collections.singletonList(lecture));
         userRepository.save(user);
 //        URI location = ServletUriComponentsBuilder
 //                .fromCurrentContextPath().path("/user/me")
 //                .buildAndExpand(result.getId()).toUri();
 
         return ResponseEntity.ok()
-                        .body(new ApiResponse(true, "User registered successfully."));
+                .body(new ApiResponse(true, "User registered successfully."));
     }
 
     @Async
@@ -254,6 +254,22 @@ public class AuthController<T> implements AuthApi {
         userRepository.save(user);
         ResponseEntity<?> response = userDetails();
         return ResponseEntity.ok().body(response);
+
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Override
+    public ResponseEntity<?> userRole(Long id) {
+        if(userRepository.getById(id) == null) throw new UserNotFoundException("User not found.");
+        WebUser webUser = userRepository.getById(id);
+        return ResponseEntity.ok()
+                .body(UserRoleResponse
+                        .builder()
+                        .webUser(WebUserRoleResponse
+                                .builder()
+                                .roles(webUser.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
+                                .build())
+                        .build());
 
     }
 }
